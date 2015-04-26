@@ -91,4 +91,5 @@ if __FILE__ == $PROGRAM_NAME
   p b.binary_search(2)
   p b.binary_search(4)
   p b.binary_search(6)
+  p b.binary_search(-5000)
 end
