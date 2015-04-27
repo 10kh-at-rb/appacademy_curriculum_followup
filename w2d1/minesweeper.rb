@@ -2,10 +2,14 @@
 
 class Board
 
+  def self.value_generator
+     (rand(100) > 79) ? 1 : 0
+  end
+
   def initialize(player)
     @player = player
     @hidden_grid = Array.new(9) {Array.new(9){Tile.new(self,Board.value_generator)}}
-    @visible_grid = Array.new(9){Array.new(9){'*'}}
+    @visible_grid = Array.new(9){Array.new(9){'^'}}
   end
 
   def play
@@ -13,19 +17,25 @@ class Board
 
     until over?
       display_board
-      @player.get_move
+      info = @player.get_move
+      update_board(info[0],info[1])
     end
 
   end
 
   private
+
     def display_board
-      @visible_grid.each do |subary|
+      @visible_grid.reverse.each do |subary|
         p subary
       end
     end
 
     def over?
+      @visible_grid.none?{|subary| subary.include?('*')}
+    end
+
+    def reveal(indices)
 
     end
 
@@ -33,8 +43,12 @@ class Board
       puts "Welcome to Mine Sweeper!"
     end
 
-    def self.value_generator
-       (rand(100) > 79) ? 1 : 0
+    def update_board(choice,indices)
+      if choice == 'R'
+        reveal(indices)
+      elsif choice == 'F'
+        @visible_grid[indices[1]][indices[0]]='F'
+      end
     end
 
 end
@@ -59,7 +73,7 @@ class Player
     puts "Choose a tile to reveal or flag (e.g. r, 4, 7):"
 
     input = gets.chomp.split(', ')
-    choice = input.take(1)
+    choice = input[0]
     indices = input.drop(1).map(&:to_i)
 
     [choice, indices]
