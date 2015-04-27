@@ -4,19 +4,29 @@ class Board
 
   def initialize(player)
     @player = player
-    @grid = Array.new(9) {Array.new(9){Tile.new(self,Board.value_generator)}}
+    @hidden_grid = Array.new(9) {Array.new(9){Tile.new(self,Board.value_generator)}}
+    @visible_grid = Array.new(9){Array.new(9){'*'}}
   end
 
   def play
     start_of_game_display
-    display_board
+
+    until over?
+      display_board
+      @player.get_move
+    end
+
   end
 
   private
     def display_board
-      @grid.each do |subary|
-        p subary.map{|x| x.value}
+      @visible_grid.each do |subary|
+        p subary
       end
+    end
+
+    def over?
+
     end
 
     def start_of_game_display
@@ -31,7 +41,7 @@ end
 
 class Tile
   attr_reader :value
-  
+
   def initialize(board, value)
     @board = board
     @value = value
@@ -39,8 +49,20 @@ class Tile
 end
 
 class Player
+  attr_accessor :name
+
   def initialize(name)
     @name = name
+  end
+
+  def get_move
+    puts "Choose a tile to reveal or flag (e.g. r, 4, 7):"
+
+    input = gets.chomp.split(', ')
+    choice = input.take(1)
+    indices = input.drop(1).map(&:to_i)
+
+    [choice, indices]
   end
 end
 
