@@ -10,6 +10,7 @@ class Board
     @player = player
     @hidden_grid = Array.new(9){Array.new(9){0}}
     @visible_grid = Array.new(9){Array.new(9){'*'}}
+    @revealed_indices = {}
   end
 
   def play
@@ -61,12 +62,26 @@ class Board
     end
 
     def reveal(indices)
-      tile = @hidden_grid[indices[1]][indices[0]]
+      @revealed_indices[indices] = nil
+
+      tile = @hidden_grid[indices[0]][indices[1]]
       if tile.value == 1
         puts "you lose and you suck!"
         @visible_grid = @hidden_grid.map{|tile| tile.value}
       else
         reveal_number_on_tile(tile,indices)
+      end
+    end
+
+    def reveal_neighbors_numbers(tile, indices)
+      neighbors = tile.get_neighbors
+
+      neighbors.each do |neighbor|
+        if @revealed_indices.has_key?(neighbor.indices)
+          next
+        else
+          reveal(neighbor.indices)
+        end
       end
     end
 
@@ -76,7 +91,8 @@ class Board
         @visible_grid[indices.last][indices.first] = num
       else
         @visible_grid[indices.last][indices.first] = '-'
-        #tell neigbours to reveal their number
+        #tell neigbours to reveal their numbers
+        reveal_neighbors_numbers(tile, indices)
       end
     end
 
@@ -93,11 +109,10 @@ class Board
         @visible_grid[indices[1]][indices[0]]='F'
       end
     end
-
 end
 
 class Tile
-  attr_reader :value
+  attr_reader :value, :indices
   NEIGHBORS = [
     [-1,1],
     [-1, 0],
@@ -116,15 +131,15 @@ class Tile
   end
 
   def get_neighbors
-    neighbors = []
+    neighbor_array = []
 
     NEIGHBORS.each do |(dx, dy)|
       new_indices = [@indices.first + dx, @indices.last + dy]
       next if new_indices.any?{|value| value < 0 || value > 8}
-      neighbors << @board.hidden_grid[new_indices.last][new_indices.first]
+      neighbor_array << @board.hidden_grid[new_indices.last][new_indices.first]
     end
 
-    neighbors
+    neighbor_array
   end
 
   def get_neighbor_number
