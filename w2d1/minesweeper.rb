@@ -1,19 +1,24 @@
 #!/usr/bin/env ruby
 
 class Board
-
+  attr_reader :hidden_grid
   def self.value_generator
-     (rand(100) > 79) ? 1 : 0
+     (rand(100) > 79) ? 'M' : '-'
   end
 
   def initialize(player)
     @player = player
-    @hidden_grid = Array.new(9) {Array.new(9){Tile.new(self,Board.value_generator)}}
-    @visible_grid = Array.new(9){Array.new(9){'^'}}
+    @hidden_grid = Array.new(9){Array.new(9){0}}
+    @visible_grid = Array.new(9){Array.new(9){'*'}}
   end
 
   def play
+    populate_hidden_grid
     start_of_game_display
+
+    # DELETE THIS EVENTUALLY
+    display_hidden_board
+    puts
 
     until over?
       display_board
@@ -21,6 +26,8 @@ class Board
       update_board(info[0],info[1])
     end
 
+    display_board
+    end_of_game_display
   end
 
   private
@@ -31,16 +38,52 @@ class Board
       end
     end
 
+    def display_hidden_board
+      @hidden_grid.reverse.each do |subary|
+        p subary.map{|tile| tile.value}
+      end
+    end
+
+    def end_of_game_display
+      puts "Thanks for playing!"
+    end
+
     def over?
       @visible_grid.none?{|subary| subary.include?('*')}
     end
 
-    def reveal(indices)
+    def populate_hidden_grid
+      @hidden_grid.map!.with_index do |subary, i|
+        subary.map!.with_index do |val, j|
+          Tile.new(self, Board.value_generator,[i,j])
+        end
+      end
+    end
 
+    def reveal(indices)
+      tile = @hidden_grid[indices[1]][indices[0]]
+      if tile.value == 1
+        puts "you lose and you suck!"
+        @visible_grid = @hidden_grid.map{|tile| tile.value}
+      else
+        reveal_number_on_tile(tile,indices)
+      end
+    end
+
+    def reveal_number_on_tile(tile,indices)
+      num = tile.get_tile_number
+      if num > 0
+        @visible_grid[indices.last][indices.first] = num
+      else
+        @visible_grid[indices.last][indices.first] = '-'
+        #tell neigbours to reveal their number
+      end
     end
 
     def start_of_game_display
+      puts
       puts "Welcome to Mine Sweeper!"
+      puts
     end
 
     def update_board(choice,indices)
@@ -55,11 +98,50 @@ end
 
 class Tile
   attr_reader :value
+  NEIGHBORS = [
+    [-1,1],
+    [-1, 0],
+    [-1,-1],
+    [1,1],
+    [1,0],
+    [1,-1],
+    [0,1],
+    [0,-1]
+  ]
 
-  def initialize(board, value)
+  def initialize(board, value, indices)
     @board = board
     @value = value
+    @indices = indices
   end
+
+  def get_neighbors
+    neighbors = []
+
+    NEIGHBORS.each do |(dx, dy)|
+      new_indices = [@indices.first + dx, @indices.last + dy]
+      next if new_indices.any?{|value| value < 0 || value > 8}
+      neighbors << @board.hidden_grid[new_indices.last][new_indices.first]
+    end
+
+    neighbors
+  end
+
+  def get_neighbor_number
+    #should get all 8 NEIGHBORS to reveal their number
+    #and reveal their neighbors if empty
+
+    #we should create a hash if the tile has already been called and revealed
+  end
+
+  def get_tile_number
+    counter = 0
+    neighbors = get_neighbors
+    neighbors.each{|neigh| counter += 1 if neigh.value == 'M'}
+    counter
+  end
+
+
 end
 
 class Player
