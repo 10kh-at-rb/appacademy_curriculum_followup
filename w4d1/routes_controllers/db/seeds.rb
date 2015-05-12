@@ -1,0 +1,8 @@
+User.create!(username: 'Austin')
+User.create!(username: 'Sam')
+Contact.create!(name: 'Pizza', email: 'its@yum.bro', user_id: 1)
+ContactShare.create!(contact_id: 1, user_id: 2)
+Contact.create!(name: 'Pizza', email: 'taco@lettuce.orange', user_id: 2)
+ContactShare.create!(contact_id: 2, user_id: 1)
+Contact.create!(name: 'Pizdsfadfsa', email: 'taco@lettuceasdfasdf.orange', user_id: 2)
+ContactShare.create!(contact_id: 3, user_id: 1)
