@@ -1,0 +1,9 @@
+<li><strong><%= post.author.username %></strong>:  
+  <%= post.title %><br>
+  <%= post.url %><br>
+  <%= post.content %><br>
+  <% if current_user.id == post.author_id %>
+    <%= button_to "Edit Post", edit_post_url(post), method: :get %>
+  <% end %>
+  <hr>
+</li>

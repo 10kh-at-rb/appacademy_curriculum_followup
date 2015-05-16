@@ -1,0 +1,25 @@
+
+<form action="<%= action %>" method="POST">
+  <% if method != "POST" %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+
+  <%= render_auth_token %>
+
+  <label>Title:
+    <input type="text" name="post[title]" value="<%= post.title %>">
+  </label><br><br>
+
+  <label>Url:
+    <input type="text" name="post[url]" value="<%= post.url %>">
+  </label><br><br>
+
+  <label>Content:
+    <textarea name="post[content]"><%= @post.content %></textarea>
+  </label><br><br>
+
+  <input type="hidden" name="post[sub_id]" value="<%= sub_id %>">
+
+  <input type="submit" value="<%= button_value %>">
+
+</form>

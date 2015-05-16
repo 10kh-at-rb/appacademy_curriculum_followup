@@ -1,0 +1,9 @@
+<h1><%= @sub.title %></h1>
+
+<%= display_messages %>
+
+<%= @sub.description %><br><br>
+
+<%= button_to "Create New Post", new_sub_post_url(@sub), method: :get %>
+
+<%= render @posts %>

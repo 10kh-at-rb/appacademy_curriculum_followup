@@ -1,0 +1,10 @@
+<h1>Create New Post</h1>
+
+<%= display_messages %>
+
+<%= render "form",
+  method: "POST",
+  action: posts_url,
+  button_value: "Post post",
+  post: @post,
+  sub_id: @sub_id %>

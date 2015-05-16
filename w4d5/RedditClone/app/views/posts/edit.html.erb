@@ -1,0 +1,10 @@
+<h1>Edit Yer Post</h1>
+
+<%= display_messages %>
+
+<%= render "form",
+  method: "PATCH",
+  action: post_url(@post),
+  button_value: "Update post",
+  post: @post,
+  sub_id: @post.sub_id %>

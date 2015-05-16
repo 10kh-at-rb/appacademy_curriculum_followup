@@ -1,0 +1,19 @@
+<h1>Log in</h1>
+
+<%= link_to "Sign up", new_user_url %><br><br>
+
+<%= display_messages %>
+
+<form action="<%= sessions_url %>", method="POST">
+  <%= render_auth_token %>
+
+  <label>Username:
+    <input type="text" name="user[username]">
+  </label><br><br>
+
+  <label>Password:
+    <input type="password" name="user[password]">
+  </label><br><br>
+
+  <input type="submit" value="Log in">
+</form>

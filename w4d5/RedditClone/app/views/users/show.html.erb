@@ -1,0 +1,5 @@
+<h1>Welcome <%= @user.username %></h1>
+
+<%= button_to "Add Sub", new_sub_url, method: :get %><br><br>
+
+<%= render @subs, user: @user %>
