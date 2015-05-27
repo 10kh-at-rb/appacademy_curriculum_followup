@@ -1,0 +1,16 @@
+/* PHASE 3: Layout */
+.content {
+  min-height: 200px;
+  background-color: white;
+}
+
+.content-sidebar{
+  float: left;
+  width: 200px;
+  padding: 50px;
+}
+
+.content-main{
+  width: 500px;
+  padding: 50px;
+}
