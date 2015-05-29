@@ -1,0 +1,59 @@
+body {
+  font-family: sans-serif;
+}
+
+.tabs:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.tabs li.active {
+  background-color: white;
+  border-bottom-color: white;
+}
+
+.tabs li {
+  display: block;
+  float: left;
+  padding:5px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px 0px 1px 1px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: #eee;
+}
+
+.tabs li:last-child {
+  border-right-width: 1px;
+}
+
+.tabs > li.active > a {
+  color: black;
+}
+
+.tabs a {
+  color: #555;
+  text-decoration: none;
+}
+
+div.tab-pane {
+  z-index: -1;
+  position: relative;
+  top: -1px;
+  display: none;
+  width: 500px;
+  border: 1px solid black;
+}
+
+div.tab-pane.active {
+  display: block;
+  transition: opacity 500ms linear;
+}
+
+div.tab-pane.transitioning {
+  display: block;
+  opacity: 0;
+  transition: opacity 500ms linear;
+}

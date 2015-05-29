@@ -1,0 +1,70 @@
+.group:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+div.thumbnails {
+  float: left;
+  height: 49.8%;
+  width: 33.3333%;
+  margin: 0;
+}
+
+div.gutter {
+  height: 20%;
+  position: relative;
+}
+
+a.nav {
+  text-decoration: none;
+  color: hotpink;
+  font-size: 36px;
+  /*height: 100%;*/
+  text-align: center;
+  width: 5%;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translateY(-50%);
+  /*background: hotpink;*/
+}
+
+a.nav:last-child {
+  left: 95%;
+}
+
+a.nav:active {
+  color: red;
+}
+
+div.gutter-images {
+  height: 100%;
+  width: 90%;
+  position: relative;
+  left: 5%;
+}
+
+div.gutter-images > img {
+  width: 20%;
+  height: 100%;
+  display: block;
+  float: left;
+}
+
+div.active > img {
+  width: 100%;
+  height: 100%;
+}
+
+div.active {
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}

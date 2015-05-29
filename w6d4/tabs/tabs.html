@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Cool Website</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./tabs.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset-min.css">
+    <link href="./tabs.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <ul class="tabs" data-content-tabs="#content-tabs">
+      <li class="active">
+        <a href="#st-stephens-day">St. Stephens Day Pie</a>
+      </li>
+      <li>
+        <a href="#cumberland">Cumberland Pie</a>
+      </li>
+      <li>
+        <a href="#fish">Fish Pie</a>
+      </li>
+    </ul>
+
+    <div id="content-tabs">
+      <div class="tab-pane active" id="st-stephens-day">
+        <p>
+          A St. Stephen's Day pie is made using turkey and ham. It's so delicious
+          that I'm often like, "yum".
+        </p>
+      </div>
+      <div class="tab-pane" id="cumberland">
+        <p>
+          The Cumberland pie is a variant of Shepherd's Pie with a layer of
+          breadcrumb on top. It's like, so, like, good... that sometimes, I'm like,
+          BREADCRUMBS!? WOW! I like bread too.
+        </p>
+      </div>
+      <div class="tab-pane" id="fish">
+        <p>
+          Despite it's name, fish pie is not the most disgusting, revolting food
+          dish mankind has ever created. We all know what that is: Eel Pie. I'm mean,
+          eew. The fish pie is usually made with white, often smoked, fish
+          (for example cod, haddock or halibut) in a white sauce or cheddar
+          cheese sauce made using the milk the fish was poached in.
+        </p>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $(function() {
+        $(".tabs").tabs();
+      });
+    </script>
+  </body>
+</html>
