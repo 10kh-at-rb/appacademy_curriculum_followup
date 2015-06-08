@@ -9,6 +9,11 @@ TrelloClone.Views.BoardsIndex = Backbone.View.extend({
   render: function () {
     this.$el.html(this.template({ boards: this.collection }));
 
+    var newBoard = new TrelloClone.Views.BoardsNew({
+      collection: this.collection
+    });
+    this.$el.append(newBoard.render().$el);
+
     return this;
   }
 
